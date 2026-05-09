@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import time
+from concurrent.futures import ThreadPoolExecutor
+
 import gradio as gr
 
 from crew import run_crew
@@ -217,8 +220,18 @@ def validate_idea(idea: str, progress=gr.Progress()):
         return "Please enter a startup idea.", "", "", ""
 
     try:
-        progress(0.05, desc="Agents are working. This may take 30 to 60 seconds...")
-        result = run_crew(idea.strip())
+        progress_value = 0.05
+        progress(progress_value, desc="Agents are working... 5%")
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(run_crew, idea.strip())
+            while not future.done():
+                time.sleep(1.5)
+                progress_value = min(0.95, progress_value + 0.03)
+                progress(
+                    progress_value,
+                    desc=f"Agents are working. This may take 30 to 60 seconds... {int(progress_value * 100)}%",
+                )
+            result = future.result()
         progress(1.0, desc="Validation report generated.")
         return (
             result["market_output"],
