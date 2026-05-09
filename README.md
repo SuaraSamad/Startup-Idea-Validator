@@ -1,3 +1,13 @@
+---
+title: Startup Idea Validator
+emoji: 🚀
+colorFrom: green
+colorTo: blue
+sdk: gradio
+sdk_version: 6.14.0
+app_file: app.py
+pinned: false
+---
 # Startup Idea Validator
 
 A multi-agent AI app built with CrewAI, OpenAI, and Gradio to validate startup ideas with:
