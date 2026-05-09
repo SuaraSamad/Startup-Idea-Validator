@@ -1,0 +1,28 @@
+market_research_task:
+  description: >
+    Research the following startup idea thoroughly: {idea}. Find data on market size,
+    growth trends, target audience, and real demand signals. Use search and scraping
+    tools to find current and relevant information.
+  expected_output: >
+    A structured market research report covering market size, trends, target audience,
+    demand signals and 3 to 5 relevant sources.
+
+competitor_analysis_task:
+  description: >
+    Find and analyze the top competitors for this startup idea: {idea}. Research their
+    features, pricing, strengths, weaknesses and market positioning. Identify gaps or
+    underserved areas the idea could target.
+  expected_output: >
+    A competitor analysis report listing at least 3 to 5 competitors with their
+    features, pricing, weaknesses and a summary of market gaps.
+
+validation_task:
+  description: >
+    Using the market research and competitor analysis provided, validate this startup
+    idea: {idea}. Weigh the opportunity, the competition, and the feasibility. Give a
+    final verdict.
+  expected_output: >
+    A full validation report structured as follows: Executive Summary, Market
+    Opportunity score out of 10, Competition Level score out of 10, Feasibility score
+    out of 10, Key Risks, Key Opportunities, Final Verdict which is either GO or
+    NO-GO with clear reasoning.

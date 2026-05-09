@@ -1,0 +1,16 @@
+[project]
+name = "startup-validator"
+version = "0.1.0"
+description = "Multi-agent startup idea validator built with CrewAI"
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+dependencies = [
+    "crewai",
+    "crewai-tools",
+    "gradio",
+    "python-dotenv",
+    "pyyaml",
+]
+
+[tool.uv]
+package = false
