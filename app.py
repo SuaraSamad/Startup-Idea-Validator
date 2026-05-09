@@ -34,18 +34,24 @@ body, .gradio-container {
 .app-title {
   font-size: 36px;
   font-weight: 700;
-  color: #E6EDF3;
+  color: #E6EDF3 !important;
   margin-bottom: 10px;
   letter-spacing: -0.5px;
 }
 
+.app-header h1,
+.app-header div,
+.app-title {
+  color: #E6EDF3 !important;
+}
+
 .app-title span {
-  color: #00C896;
+  color: #00C896 !important;
 }
 
 .app-subtitle {
   font-size: 15px;
-  color: #8B949E;
+  color: #8B949E !important;
   max-width: 520px;
   margin: 0 auto;
   line-height: 1.6;
@@ -93,10 +99,27 @@ textarea, input[type="text"] {
   box-shadow: none !important;
 }
 
-textarea:focus, input[type="text"]:focus {
+textarea:focus,
+textarea:focus-visible,
+input[type="text"]:focus,
+input[type="text"]:focus-visible {
   border-color: #00C896 !important;
   outline: none !important;
   box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.1) !important;
+}
+
+.idea-input textarea,
+.idea-input textarea:focus,
+.idea-input textarea:focus-visible {
+  outline: none !important;
+  border: 1px solid #30363D !important;
+  box-shadow: none !important;
+}
+
+.idea-input > label > textarea {
+  border: 1px solid #30363D !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 textarea::placeholder {
@@ -240,7 +263,6 @@ def validate_idea(idea: str, progress=gr.Progress()):
             result["raw_output"],
         )
     except Exception as error:
-        # Keep UI stable and informative if any external service fails.
         return f"Error: {str(error)}", "", "", ""
 
 
@@ -262,7 +284,7 @@ def build_ui() -> gr.Blocks:
             <div class="app-header">
                 <div class="app-title">Startup Idea <span>Validator</span></div>
                 <div class="app-subtitle">
-                    Powered by CrewAI and OpenAI. Drop your idea and get a full AI-generated
+                    Powered by CrewAI and Groq. Drop your idea and get a full AI-generated
                     validation report in seconds.
                 </div>
             </div>
@@ -291,12 +313,16 @@ def build_ui() -> gr.Blocks:
             with gr.Tab("Full Validation Report"):
                 validation_output = gr.Markdown(elem_classes=["output-card"])
             with gr.Tab("Raw Output"):
-                raw_output = gr.Textbox(lines=18, show_label=False, elem_classes=["output-card"])
+                raw_output = gr.Textbox(
+                    lines=18,
+                    show_label=False,
+                    elem_classes=["output-card"]
+                )
 
         gr.HTML(
             """
             <div class="app-footer">
-                Built with CrewAI · OpenAI · Gradio
+                Built with CrewAI · Groq · Gradio &nbsp;|&nbsp; @SuaraSamad
             </div>
             """
         )
@@ -326,8 +352,6 @@ if __name__ == "__main__":
     app = build_ui()
     app.queue(default_concurrency_limit=1)
     app.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
         show_error=True,
         theme=gr.themes.Base(),
         css=APP_CSS,
