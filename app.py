@@ -61,11 +61,62 @@ body, .gradio-container {
 .input-card {
   background: #161B22 !important;
   border: 1px solid #30363D !important;
-  border-radius: 16px;
-  padding: 32px;
-  width: min(90vw, 980px);
-  min-width: 700px;
-  margin: 0 auto 32px;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  width: 100% !important;
+  max-width: 980px !important;
+  min-width: unset !important;
+  margin: 0 auto 32px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .input-card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    margin: 0 12px 24px !important;
+    width: calc(100% - 24px) !important;
+  }
+
+  .validate-btn {
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+  }
+
+  textarea {
+    font-size: 14px !important;
+    padding: 12px !important;
+  }
+
+  .app-title {
+    font-size: 26px !important;
+  }
+
+  .app-subtitle {
+    font-size: 13px !important;
+    padding: 0 16px !important;
+  }
+
+  .app-header {
+    padding: 32px 16px 24px !important;
+  }
+
+  .output-card {
+    padding: 16px !important;
+    font-size: 13px !important;
+  }
+
+  .tab-nav button {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+  }
+
+  .output-card,
+  .output-card * {
+    color: #E6EDF3 !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #E6EDF3 !important;
+  }
 }
 
 .input-card, .input-card > div, .input-card .gr-group {
@@ -197,6 +248,49 @@ textarea::placeholder {
   min-height: 320px !important;
 }
 
+/* Force full opacity and color on all output elements */
+.output-card,
+.output-card *,
+.output-card p,
+.output-card h1,
+.output-card h2,
+.output-card h3,
+.output-card li,
+.output-card strong,
+.output-card em {
+  color: #E6EDF3 !important;
+  opacity: 1 !important;
+}
+
+/* Fix Gradio Markdown wrapper on mobile */
+.prose,
+.prose *,
+[class*="prose"] p,
+[class*="prose"] li,
+[class*="prose"] h1,
+[class*="prose"] h2,
+[class*="prose"] h3 {
+  color: #E6EDF3 !important;
+  opacity: 1 !important;
+}
+
+/* Fix Gradio default text color overrides */
+.gradio-container p,
+.gradio-container span,
+.gradio-container li,
+.gradio-container h1,
+.gradio-container h2,
+.gradio-container h3 {
+  color: #E6EDF3 !important;
+  opacity: 1 !important;
+}
+
+/* Keep header subtitle / footer secondary after broad container text rules */
+.app-subtitle,
+.app-footer {
+  color: #8B949E !important;
+}
+
 /* Status / loading message */
 .status-msg {
   background: #161B22;
@@ -244,7 +338,7 @@ def validate_idea(idea: str, progress=gr.Progress()):
 
     try:
         progress_value = 0.05
-        progress(progress_value, desc="Agents are working... 5%")
+        progress(progress_value, desc="Agents are working...")
         with ThreadPoolExecutor(max_workers=1) as executor:
             future = executor.submit(run_crew, idea.strip())
             while not future.done():
@@ -252,7 +346,7 @@ def validate_idea(idea: str, progress=gr.Progress()):
                 progress_value = min(0.95, progress_value + 0.03)
                 progress(
                     progress_value,
-                    desc=f"Agents are working. This may take 30 to 60 seconds... {int(progress_value * 100)}%",
+                    desc="Agents are working. This may take 30 to 60 seconds...",
                 )
             result = future.result()
         progress(1.0, desc="Validation report generated.")
@@ -322,7 +416,7 @@ def build_ui() -> gr.Blocks:
         gr.HTML(
             """
             <div class="app-footer">
-                Built with CrewAI · Groq · Gradio &nbsp;|&nbsp; @SuaraSamad
+                Built with CrewAI · OpenAI · Gradio &nbsp;|&nbsp; @SuaraSamad
             </div>
             """
         )
