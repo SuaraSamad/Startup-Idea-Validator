@@ -378,7 +378,7 @@ def build_ui() -> gr.Blocks:
             <div class="app-header">
                 <div class="app-title">Startup Idea <span>Validator</span></div>
                 <div class="app-subtitle">
-                    Powered by CrewAI and Groq. Drop your idea and get a full AI-generated
+                    Powered by CrewAI and OpenAI. Drop your idea and get a full AI-generated
                     validation report in seconds.
                 </div>
             </div>
